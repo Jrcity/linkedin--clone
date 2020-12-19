@@ -1,0 +1,35 @@
+.post {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.post__header {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.post__info {
+  margin-left: 10px;
+}
+
+.post__info > p {
+  font-size: 13px;
+  color: #999;
+}
+.post__info > h2 {
+  font-size: 15px;
+}
+
+.post__body {
+  overflow-wrap: break-word;
+}
+
+.post__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
