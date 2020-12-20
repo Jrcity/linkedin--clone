@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+import firebase from 'firebase';
 import {
   CalendarToday,
   Create,
@@ -5,12 +7,46 @@ import {
   Image,
   Subscriptions,
 } from '@material-ui/icons';
-import React from 'react';
+
+//my imports
 import './Feed.css';
 import InputOption from './InputOption';
 import Post from './Post';
+import { db } from '../configs/firebase';
 
 function Feed() {
+  const [post, setPost] = useState('');
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    db.collection('posts')
+      .orderBy('timestamp', 'desc')
+      .onSnapshot((snapshot) => {
+        setPosts(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data(),
+          })),
+        );
+      });
+  }, []);
+
+  const sendPost = (e) => {
+    e.preventDefault();
+    let input = post.trim();
+    if (input) {
+      db.collection('posts').add({
+        description: 'Test',
+        message: input,
+        name: 'Redemption',
+        postUrl: '',
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+
+      setPost('');
+    }
+  };
+
   return (
     <div className={'feed'}>
       <div className={'feed__top'}>
@@ -19,8 +55,13 @@ function Feed() {
             <Create />
           </span>
           <form>
-            <input type={'text'} placeholder={'start a post...'} />
-            <button type={'submit'}></button>
+            <input
+              type={'text'}
+              placeholder={'start a post...'}
+              value={post}
+              onChange={(e) => setPost(e.target.value)}
+            />
+            <button type={'submit'} onClick={sendPost}></button>
           </form>
         </div>
         <div className={'feed__options'}>
@@ -39,14 +80,15 @@ function Feed() {
         </div>
       </div>
       <div className={'feed__posts'}>
-        <Post
-          name={'redemption'}
-          description={'redemptionjonathan1@gmail.com'}
-          message={'Hello people'}
-          photoUrl={
-            'https://media-exp1.licdn.com/dms/image/C5603AQFaAlP-q31fRQ/profile-displayphoto-shrink_100_100/0/1608125932159?e=1613606400&v=beta&t=YxV5EKWPtPv4ep5jf3omKwfsFxDU-hBbqzO9cN_bUFE'
-          }
-        />
+        {posts.map(({ data: { message, name, description, photoUrl }, id }) => (
+          <Post
+            key={id}
+            name={name}
+            message={message}
+            description={description}
+            photoUrl={photoUrl}
+          />
+        ))}
       </div>
     </div>
   );
