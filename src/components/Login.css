@@ -7,6 +7,7 @@
   box-sizing: border-box;
   width: 100%;
   flex-wrap: wrap;
+  height: 100%;
 }
 
 .login__text {
@@ -16,17 +17,6 @@
 .login__headerLeft > img {
   object-fit: center;
   width: 200px;
-}
-
-.login__headerRight > a:link,
-.login__headerRight > a:visited {
-  color: #f3f2ef !important;
-}
-.login__headerRight > a {
-  text-decoration: none;
-  padding: 10px;
-  background-color: #fafbfc;
-  color: #f3f2ef !important;
 }
 
 .illustration {
@@ -50,11 +40,43 @@
   width: 100%;
 }
 
-.login__details > input {
+.login__input {
   padding: 15px;
   margin-bottom: 10px;
   background: #fafbfc;
   border: none;
   color: #505050;
-  width: 50%;
+  width: 95%;
+}
+
+.login__button {
+  width: 20%;
+  background-color: #0074b5 !important;
+  color: #fafbfc !important;
+  padding: 5px;
+  font-weight: 600;
+  transition: background-color 600ms ease-in;
+}
+
+.login__button:hover {
+  background-color: #fafbfc !important;
+  color: #505050 !important;
+  transition: background-color 600ms ease-in;
+}
+
+.login__divider {
+  margin: 15px 0;
+}
+
+.login__option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.login__option > button {
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 5px #d3cdd3;
+  margin-bottom: 10px;
 }

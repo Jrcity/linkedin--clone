@@ -1,27 +1,30 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import './App.css';
-import Feed from './components/Feed';
-import Header from './components/Header';
 import Login from './components/Login';
-import Sidebar from './components/Sidebar';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 import { selectUser } from './features/userSlice';
+import FirstPage from './routes/FirstPage';
 
 function App() {
   const user = useSelector(selectUser);
   return (
     <div className={'app'}>
-      {user ? (
-        <>
-          <Header />
-          <div className="app__body">
-            <Sidebar />
-            <Feed />
-          </div>
-        </>
-      ) : (
-        <Login />
-      )}
+      <Router>
+        <Switch>
+          {user ? (
+            <Route path={'/'} render={<FirstPage />} />
+          ) : (
+            <Redirect to={{ pathname: '/signin' }} />
+          )}
+        </Switch>
+        <Route path={'/signin'} component={Login} />
+      </Router>
     </div>
   );
 }
