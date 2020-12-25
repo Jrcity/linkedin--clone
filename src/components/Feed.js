@@ -13,10 +13,13 @@ import './Feed.css';
 import InputOption from './InputOption';
 import Post from './Post';
 import { db } from '../configs/firebase';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../features/userSlice';
 
 function Feed() {
   const [post, setPost] = useState('');
   const [posts, setPosts] = useState([]);
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     db.collection('posts')
@@ -36,10 +39,10 @@ function Feed() {
     let input = post.trim();
     if (input) {
       db.collection('posts').add({
-        description: 'Test',
+        description: user?.email,
+        name: user?.displayName,
         message: input,
-        name: 'Redemption',
-        postUrl: '',
+        photoUrl: user?.photoUrl,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
 

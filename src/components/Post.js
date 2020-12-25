@@ -4,7 +4,7 @@ import {
   ChatOutlined,
   SendOutlined,
   ShareOutlined,
-  ThumbsUpDownOutlined,
+  ThumbUp,
 } from '@material-ui/icons';
 import InputOption from './InputOption';
 import './Post.css';
@@ -23,11 +23,7 @@ function Post({ name, description, message, photoUrl }) {
         <p>{message}</p>
       </div>
       <div className={'post__bottom'}>
-        <InputOption
-          Icon={ThumbsUpDownOutlined}
-          title={'Like'}
-          color={'#999'}
-        />
+        <InputOption Icon={ThumbUp} title={'Like'} color={'#999'} />
         <InputOption Icon={ChatOutlined} title={'Comment'} color={'#999'} />
         <InputOption Icon={ShareOutlined} title={'Share'} color={'#999'} />
         <InputOption Icon={SendOutlined} title={'Send'} color={'#999'} />

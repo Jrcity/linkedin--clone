@@ -10,17 +10,87 @@ import React, { useState } from 'react';
 import './Login.css';
 
 import illustration from '../assets/referral.svg';
+import { auth, googleProvider } from '../configs/firebase';
+import { useDispatch } from 'react-redux';
+import { login } from '../features/userSlice';
 
 function Login() {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [signupEmail, setSignupEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signupPassword, setSignupPassword] = useState('');
-  const [fullname, setFullname] = useState('');
+  const [name, setName] = useState('');
 
-  const handleLogin = () => {};
-  const handleSignup = () => {};
-  const signinWithGoogle = () => {};
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (email && password) {
+      auth.signInWithEmailAndPassword(email, password).then((userAuth) => {
+        let splitName = userAuth.user.displayName;
+        dispatch(
+          login({
+            email: userAuth.user.email,
+            uid: userAuth.user.uid,
+            displayName: userAuth.user.displayName,
+            photoUrl: `https://ui-avatars.com/api/?background=random&name=${splitName[0]}+${splitName[1]}`,
+          }),
+        );
+        setEmail('');
+        setPassword('');
+      });
+    }
+  };
+  const handleSignup = (e) => {
+    e.preventDefault();
+
+    if (!name || !signupEmail || !signupPassword) {
+      return;
+    }
+    let splitName = name.split(' ');
+    auth
+      .createUserWithEmailAndPassword(signupEmail, signupPassword)
+      .then((userAuth) => {
+        //setting user profile;
+
+        userAuth.user
+          .updateProfile({
+            displayName: name,
+            profileURL: `https://ui-avatars.com/api/?background=random&name=${splitName[0]}+${splitName[1]}`,
+          })
+          .then(() => {
+            dispatch(
+              login({
+                email: userAuth.user.email,
+                uid: userAuth.user.uid,
+                displayName: userAuth.user.displayName,
+                photoUrl: `https://ui-avatars.com/api/?background=random&name=${splitName[0]}+${splitName[1]}`,
+              }),
+            );
+          });
+        setName('');
+        setSignupEmail('');
+        setSignupPassword('');
+      })
+      .catch((error) => console.error(error.message));
+  };
+  const signinWithGoogle = () => {
+    auth
+      .signInWithPopup(googleProvider)
+      .then((userAuth) => {
+        const { email, displayName, photoURL } = userAuth.user;
+        let splitName = displayName.split();
+        dispatch(
+          login({
+            email,
+            displayName,
+            photoUrl: photoURL
+              ? photoURL
+              : `https://ui-avatars.com/api/?background=random&name=${splitName[0]}+${splitName[1]}`,
+          }),
+        );
+      })
+      .catch((error) => console.error(error.message));
+  };
 
   return (
     <div className={'login'}>
@@ -56,7 +126,11 @@ function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <Button onClick={handleLogin} className={'login__button'}>
+              <Button
+                type={'submit'}
+                onClick={handleLogin}
+                className={'login__button'}
+              >
                 Sign In
               </Button>
               <div className={'login__divider'}>
@@ -65,7 +139,7 @@ function Login() {
             </form>
             <div className={'login__options'}>
               <div className={'login__option'}>
-                <Button>Signin with Google</Button>
+                <Button onClick={signinWithGoogle}>Signin with Google</Button>
               </div>
               <Accordion className={'login__details signup__details'}>
                 <AccordionSummary>
@@ -76,8 +150,8 @@ function Login() {
                     <input
                       className={'login__input'}
                       type={'text'}
-                      value={fullname}
-                      onChange={(e) => setFullname(e.target.value)}
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                       placeholder={'Full Name'}
                     />
                     <input
@@ -94,7 +168,13 @@ function Login() {
                       value={signupPassword}
                       onChange={(e) => setSignupPassword(e.target.value)}
                     />
-                    <Button className={'login__button'}>Sign Up</Button>
+                    <Button
+                      type={'submit'}
+                      onClick={handleSignup}
+                      className={'login__button'}
+                    >
+                      Sign Up
+                    </Button>
                   </form>
                 </AccordionDetails>
               </Accordion>
