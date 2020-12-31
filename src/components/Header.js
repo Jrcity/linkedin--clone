@@ -8,12 +8,15 @@ import {
   SupervisorAccount,
 } from '@material-ui/icons';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { auth } from '../configs/firebase';
+import { selectUser } from '../features/userSlice';
 import './Header.css';
 import HeaderOption from './HeaderOption';
 
 function Header() {
   const [open, setOpen] = useState(false);
+  const [user] = useSelector(selectUser);
   function handleOpen() {
     setOpen((prev) => !prev);
   }
@@ -41,9 +44,7 @@ function Header() {
         <ClickAwayListener onClickAway={handleClose}>
           <div className={'header__logout'}>
             <HeaderOption
-              avatar={
-                'https://media-exp1.licdn.com/dms/image/C5603AQFaAlP-q31fRQ/profile-displayphoto-shrink_100_100/0/1608125932159?e=1613606400&v=beta&t=YxV5EKWPtPv4ep5jf3omKwfsFxDU-hBbqzO9cN_bUFE'
-              }
+              avatar={user.displayName}
               title={'me'}
               onClick={handleOpen}
             />

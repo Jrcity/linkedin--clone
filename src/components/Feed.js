@@ -8,6 +8,8 @@ import {
   Subscriptions,
 } from '@material-ui/icons';
 
+import FlipMove from 'react-flip-move';
+
 //my imports
 import './Feed.css';
 import InputOption from './InputOption';
@@ -83,15 +85,19 @@ function Feed() {
         </div>
       </div>
       <div className={'feed__posts'}>
-        {posts.map(({ data: { message, name, description, photoUrl }, id }) => (
-          <Post
-            key={id}
-            name={name}
-            message={message}
-            description={description}
-            photoUrl={photoUrl}
-          />
-        ))}
+        <FlipMove>
+          {posts.map(
+            ({ data: { message, name, description, photoUrl }, id }) => (
+              <Post
+                key={id}
+                name={name}
+                message={message}
+                description={description}
+                photoUrl={photoUrl}
+              />
+            ),
+          )}
+        </FlipMove>
       </div>
     </div>
   );
