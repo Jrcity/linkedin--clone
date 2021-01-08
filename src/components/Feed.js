@@ -18,13 +18,14 @@ import { db } from '../configs/firebase';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../features/userSlice';
 
-function Feed() {
+const Feed = () => {
   const [post, setPost] = useState('');
   const [posts, setPosts] = useState([]);
   const user = useSelector(selectUser);
 
   useEffect(() => {
-    db.collection('posts')
+    var unsubscribe = db
+      .collection('posts')
       .orderBy('timestamp', 'desc')
       .onSnapshot((snapshot) => {
         setPosts(
@@ -34,6 +35,8 @@ function Feed() {
           })),
         );
       });
+
+    return () => unsubscribe;
   }, []);
 
   const sendPost = (e) => {
@@ -46,6 +49,7 @@ function Feed() {
         message: input,
         photoUrl: user?.photoUrl,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        likes: 0,
       });
 
       setPost('');
@@ -85,22 +89,26 @@ function Feed() {
         </div>
       </div>
       <div className={'feed__posts'}>
-        <FlipMove>
-          {posts.map(
-            ({ data: { message, name, description, photoUrl }, id }) => (
-              <Post
-                key={id}
-                name={name}
-                message={message}
-                description={description}
-                photoUrl={photoUrl}
-              />
-            ),
-          )}
-        </FlipMove>
+        {posts ? (
+          <FlipMove>
+            {posts.map(
+              ({ data: { message, name, description, photoUrl }, id }) => (
+                <Post
+                  key={id}
+                  postId={id}
+                  name={name}
+                  message={message}
+                  description={description}
+                  photoUrl={photoUrl}
+                />
+              ),
+            )}
+          </FlipMove>
+        ) : (
+          <p>Not network.</p>
+        )}
       </div>
     </div>
   );
-}
-
+};
 export default Feed;

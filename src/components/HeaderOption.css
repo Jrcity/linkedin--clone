@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   margin-right: 20px;
-  color: #999;
+  color: #777777;
   cursor: pointer;
   flex-direction: column;
 }
@@ -21,4 +21,10 @@
   object-fit: contain;
   height: 25px !important;
   width: 25px !important;
+}
+
+@media only screen and (max-width: 1024px) {
+  .headerOption__title {
+    display: none;
+  }
 }

@@ -44,13 +44,13 @@ function App() {
       <Router>
         <Switch>
           {user ? (
-            <Redirect to={{ pathname: '/' }} />
+            <Redirect to={{ pathname: '/feed/' }} />
           ) : (
-            <Redirect to={{ pathname: '/signin' }} />
+            <Redirect to={{ pathname: '/signin/' }} />
           )}
         </Switch>
-        <Route path={'/'} exact={true} component={FirstPage} />
-        <Route path={'/signin'} component={Login} />
+        <Route path={'/feed/'} component={FirstPage} />
+        <Route path={'/signin/'} component={Login} />
       </Router>
     </div>
   );

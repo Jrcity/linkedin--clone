@@ -1,0 +1,70 @@
+.logoutOption {
+  position: relative;
+}
+.logoutOption__list {
+  width: auto;
+  height: auto;
+  top: 52px;
+  list-style: none;
+  position: absolute;
+  right: 0;
+  z-index: 99;
+  background: #ffffff !important;
+  box-shadow: -2px 0px 5px 0 #d3d3d3;
+  display: flex;
+  border-radius: 5px 0 5px 5px;
+  flex-direction: column;
+  margin: 0;
+}
+
+.logoutOption__header {
+  display: flex;
+  padding: 10px;
+}
+
+.logoutOption__header > div {
+  margin-left: 5px;
+}
+
+.logoutOption__list > hr {
+  border: 0.3px solid #d3d3d3;
+  margin: 5px 0;
+}
+
+.logoutOption__list > span {
+  text-align: center;
+  width: 90%;
+  padding: 5px;
+  border-radius: 50px;
+  color: #316af0;
+  border: 1px solid #316af0;
+  margin: auto;
+  font-size: small;
+}
+.logoutOption__list > span:hover {
+  color: #2365ff;
+  border: 2px solid #2365ff;
+  transition: color 650ms ease-out, border 650ms ease-out,
+    background 650ms ease-in;
+  cursor: pointer;
+  background: #d0daf1;
+}
+
+.logoutOption__description {
+  color: #a7a7a7;
+  font-size: small;
+}
+
+.logoutOption__footer {
+  padding: 10px;
+}
+.logoutOption__footer > button {
+  background-color: transparent;
+  color: #999;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.logoutOption__footer > button:hover {
+  text-decoration: underline;
+}

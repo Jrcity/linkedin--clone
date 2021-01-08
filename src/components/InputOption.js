@@ -1,13 +1,16 @@
+import { IconButton } from '@material-ui/core';
 import React from 'react';
 import './InputOption.css';
 
-function InputOption({ Icon, color, title }) {
+const InputOption = ({ Icon, color, title, onClick }) => {
   return (
-    <div className={'inputOption'}>
-      {Icon && <Icon style={{ color: color }} />}
-      <h4>{title}</h4>
-    </div>
+    <IconButton onClick={onClick} className={'inputOption'}>
+      <div>
+        {Icon && <Icon style={{ color: color }} />}
+        <h4>{title}</h4>
+      </div>
+    </IconButton>
   );
-}
+};
 
 export default InputOption;

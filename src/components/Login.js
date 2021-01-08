@@ -107,7 +107,7 @@ function Login() {
       </div>
       <div className={'login__body'}>
         <Grid container>
-          <Grid tem xs={12} md={6}>
+          <Grid item xs={12} md={6}>
             <h1 className={'login__text'}>
               Welcome to your professional community.
             </h1>
@@ -143,7 +143,7 @@ function Login() {
               </div>
               <Accordion className={'login__details signup__details'}>
                 <AccordionSummary>
-                  Not a member? Click to<strong> signup.</strong>
+                  Not a member? <strong>Sign Up.</strong>
                 </AccordionSummary>
                 <AccordionDetails>
                   <form>

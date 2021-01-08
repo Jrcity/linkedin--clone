@@ -34,3 +34,12 @@
   padding: 5px 30px;
   font-size: 13px;
 }
+.post__actions {
+  display: flex;
+  justify-content: flex-start;
+  color: #b3b2b2;
+  font-weight: 600;
+  font-size: small;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  border-bottom: 1px solid #b3b2b2;
+}

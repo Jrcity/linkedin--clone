@@ -1,0 +1,11 @@
+.widget {
+  flex: 0.3;
+  width: 100%;
+  position: sticky;
+  top: 80px;
+  height: fit-content;
+  background: white;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+}
